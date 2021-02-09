@@ -34,7 +34,7 @@ class BoW(TransformerMixin):
         words = dict(sorted(words.items(), key=lambda item: -item[1]))
         words = list(words.keys())
 
-        #raise NotImplementedError
+        raise NotImplementedError
 
         # fit method must always return self
         return self
