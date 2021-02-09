@@ -32,7 +32,7 @@ class BoW(TransformerMixin):
         for word in list(' '.join(X).split()):
             words[word] += 1
         words = dict(sorted(words.items(), key=lambda item: -item[1]))
-        words = list(words.keys())
+        self.bow = list(words.keys())
 
         raise NotImplementedError
 
