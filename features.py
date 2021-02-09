@@ -28,6 +28,7 @@ class BoW(TransformerMixin):
         # task: find up to self.k most frequent tokens in texts_train,
         # sort them by number of occurences (highest first)
         # store most frequent tokens in self.bow
+        print("yes \n")
         words = dict.fromkeys(set(' '.join(X).split()), 0)
         for word in list(' '.join(X).split()):
             words[word] += 1
