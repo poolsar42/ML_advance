@@ -28,7 +28,13 @@ class BoW(TransformerMixin):
         # task: find up to self.k most frequent tokens in texts_train,
         # sort them by number of occurences (highest first)
         # store most frequent tokens in self.bow
-        raise NotImplementedError
+        words = dict.fromkeys(set(' '.join(X).split()), 0)
+        for word in list(' '.join(X).split()):
+            words[word] += 1
+        words = dict(sorted(words.items(), key=lambda item: item[1]))
+        self.bow = list(words.keys())[0:self.k]
+
+        #raise NotImplementedError
 
         # fit method must always return self
         return self
@@ -41,7 +47,12 @@ class BoW(TransformerMixin):
         """
 
         result = None
-        raise NotImplementedError
+        #raise NotImplementedError
+        result = np.zeros(self.k)
+        text = text.split()
+        for word in text:
+            if (word in self.bow):
+                result[self.bow.index(word)] += 1
         return np.array(result, "float32")
 
     def transform(self, X: np.ndarray, y=None) -> np.ndarray:
@@ -104,4 +115,5 @@ class TfIdf(TransformerMixin):
         """
         assert self.idf is not None
         return np.stack([self._text_to_tf_idf(text) for text in X])
+
 
