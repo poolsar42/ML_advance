@@ -28,6 +28,7 @@ class BoW(TransformerMixin):
         # task: find up to self.k most frequent tokens in texts_train,
         # sort them by number of occurences (highest first)
         # store most frequent tokens in self.bow
+<<<<<<< HEAD
         words = dict.fromkeys(set(' '.join(X).split()), 0)
         for word in list(' '.join(X).split()):
             words[word] += 1
@@ -35,6 +36,16 @@ class BoW(TransformerMixin):
         self.bow = list(words.keys())[0:self.k]
 
         #raise NotImplementedError
+=======
+        print("yes \n")
+        words = dict.fromkeys(set(' '.join(X).split()), 0)
+        for word in list(' '.join(X).split()):
+            words[word] += 1
+        words = dict(sorted(words.items(), key=lambda item: -item[1]))
+        self.bow = list(words.keys())
+
+        raise NotImplementedError
+>>>>>>> a6fac641715666e54c60a79425db344392b92106
 
         # fit method must always return self
         return self
