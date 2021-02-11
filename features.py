@@ -28,7 +28,6 @@ class BoW(TransformerMixin):
         # task: find up to self.k most frequent tokens in texts_train,
         # sort them by number of occurences (highest first)
         # store most frequent tokens in self.bow
-#<<<<<<< HEAD
         words = dict.fromkeys(set(' '.join(X).split()), 0)
         for word in list(' '.join(X).split()):
             words[word] += 1
@@ -36,17 +35,7 @@ class BoW(TransformerMixin):
         self.bow = list(words.keys())[0:self.k]
 
         #raise NotImplementedError
-#=======
-        print("yes \n")
-        words = dict.fromkeys(set(' '.join(X).split()), 0)
-        for word in list(' '.join(X).split()):
-            words[word] += 1
-        words = dict(sorted(words.items(), key=lambda item: -item[1]))
-        self.bow = list(words.keys())
-
- #       raise NotImplementedError
-#>>>>>>> a6fac641715666e54c60a79425db344392b92106
-
+        
         # fit method must always return self
         return self
 
@@ -102,8 +91,16 @@ class TfIdf(TransformerMixin):
         """
         :param X: array of texts to be trained on
         """
-        raise NotImplementedError
-
+        #raise NotImplementedError
+        words = set(' '.join(X).split())
+        X = np.array([np.array(list(''.join(x).split())) for x in X])
+        N = len(X)
+        for word in words:
+            k = 0;
+            for x in X:
+                if word in x:
+                    k += 1
+            self.idf[word] = np.log(N/k)
         # fit method must always return self
         return self
 
@@ -115,8 +112,14 @@ class TfIdf(TransformerMixin):
         :return tf_idf: tf-idf features
         """
 
-        result = None
-        raise NotImplementedError
+        #result = None
+        #raise NotImplementedError
+        text = list(''.join(text).split())
+        N = len(text)
+        result = [((text.count(word) / N) * self.idf[word]) if (word in self.idf) else 0. for word in text]
+        if len(result) < self.k:
+            while len(result) < self.k:
+                result.append(0.)
         return np.array(result, "float32")
 
     def transform(self, X: np.ndarray, y=None) -> np.ndarray:
